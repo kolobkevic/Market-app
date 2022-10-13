@@ -10,9 +10,10 @@
         <property name="connection.username">kolob</property>
         <property name="connection.password">kastor60</property>
         <property name="connection.pool_size">8</property>
-        <property name="dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+        <property name="dialect">org.hibernate.dialect.PostgreSQL10Dialect</property>
         <property name="current_session_context_class">thread</property>
 
         <mapping class="ru.kolobkevic.market.model.dto.Product"/>
+        <mapping class="ru.kolobkevic.market.model.dto.Customer"/>
     </session-factory>
 </hibernate-configuration>

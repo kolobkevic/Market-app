@@ -1,9 +1,11 @@
 package ru.kolobkevic.market.model.dao;
 
 import lombok.RequiredArgsConstructor;
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.springframework.stereotype.Component;
 import ru.kolobkevic.market.crud.SessionFactoryUtils;
+import ru.kolobkevic.market.model.dto.Customer;
 import ru.kolobkevic.market.model.dto.Product;
 
 import java.util.List;
@@ -26,6 +28,7 @@ public class ProductDao {
         try (Session session = factory.getSession()) {
             session.beginTransaction();
             List<Product> productList = session.createQuery("select p from Product p ORDER BY p.id").getResultList();
+            Hibernate.initialize(productList);
             session.getTransaction().commit();
             return productList;
         }
@@ -45,6 +48,17 @@ public class ProductDao {
             session.saveOrUpdate(product);
             session.getTransaction().commit();
             return product;
+        }
+    }
+
+    public List<Customer> findCustomers(Long id){
+        try (Session session = factory.getSession()) {
+            session.beginTransaction();
+//            List<Customer> customersList = session.get(Product.class, id).getCustomerList();
+//            session.getTransaction().commit();
+            var result = session.get(Product.class, id);
+            Hibernate.initialize(result.getCustomerList());
+            return result.getCustomerList();
         }
     }
 }

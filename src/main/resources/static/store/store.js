@@ -16,9 +16,6 @@ angular.module('market-front').controller('storeController', function ($scope, $
     $scope.navToEditProductPage = function (productId) {
         $location.path('/edit_product/' + productId);
     }
-    // $scope.navToDeleteProductPage = function (productId) {
-    //     $location.path('/delete/' + productId);
-    // }
 
     $scope.deleteProduct = function (productId) {
         $http({

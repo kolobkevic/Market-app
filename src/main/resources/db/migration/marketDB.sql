@@ -1,4 +1,6 @@
 DROP TABLE IF EXISTS products;
+DROP TABLE IF EXISTS customers;
+DROP TABLE IF EXISTS customers_products;
 CREATE TABLE products
 (
     id    bigserial,
@@ -40,3 +42,35 @@ VALUES ('Молоко', 98.5),
        ('Пакет', 3.0),
        ('Водка', 749.99),
        ('Лимон', 40.0);
+
+CREATE TABLE customers
+(
+    id      bigserial,
+    name    VARCHAR(255),
+    surname VARCHAR(255),
+    PRIMARY KEY (id)
+);
+INSERT INTO customers (name, surname)
+VALUES ('Vladimir', 'Putin'),
+       ('Joe', 'Biden'),
+       ('Emmanuel', 'Macron'),
+       ('Olaf', 'Scholz');
+
+CREATE TABLE customers_products
+(
+    product_id  bigint,
+    customer_id bigint,
+    FOREIGN KEY (product_id) REFERENCES products (id),
+    FOREIGN KEY (customer_id) REFERENCES customers (id)
+);
+INSERT INTO customers_products (product_id, customer_id)
+VALUES (1, 1),
+       (3, 1),
+       (8, 1),
+       (4, 2),
+       (18, 2),
+       (29, 3),
+       (24, 3),
+       (30, 3),
+       (31, 3),
+       (16, 4);

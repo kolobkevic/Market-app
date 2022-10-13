@@ -8,25 +8,25 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@Table(name = "products")
+@Table(name = "customers")
 @Getter
 @Setter
 @Entity
-public class Product {
+public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-    @Column(name = "price")
-    private double price;
-    @Column(name = "title")
-    private String title;
+    @Column(name = "name")
+    private String name;
+    @Column(name = "surname")
+    private String surname;
 
     @ManyToMany
     @JoinTable(
             name = "customers_products",
-            joinColumns = @JoinColumn(name = "product_id"),
-            inverseJoinColumns = @JoinColumn(name = "customer_id")
+            joinColumns = @JoinColumn(name = "customer_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id")
     )
-    private List<Customer> customerList;
+    private List<Product> productList;
 }
