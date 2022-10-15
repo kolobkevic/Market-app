@@ -1,6 +1,5 @@
 DROP TABLE IF EXISTS products;
 DROP TABLE IF EXISTS customers;
-DROP TABLE IF EXISTS customers_products;
 CREATE TABLE products
 (
     id    bigserial,
@@ -55,22 +54,3 @@ VALUES ('Vladimir', 'Putin'),
        ('Joe', 'Biden'),
        ('Emmanuel', 'Macron'),
        ('Olaf', 'Scholz');
-
-CREATE TABLE customers_products
-(
-    product_id  bigint,
-    customer_id bigint,
-    FOREIGN KEY (product_id) REFERENCES products (id),
-    FOREIGN KEY (customer_id) REFERENCES customers (id)
-);
-INSERT INTO customers_products (product_id, customer_id)
-VALUES (1, 1),
-       (3, 1),
-       (8, 1),
-       (4, 2),
-       (18, 2),
-       (29, 3),
-       (24, 3),
-       (30, 3),
-       (31, 3),
-       (16, 4);
