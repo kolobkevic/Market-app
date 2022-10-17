@@ -16,7 +16,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr data-ng-repeat="p in productsList">
+        <tr data-ng-repeat="p in productsListPage.content">
             <td>{{p.id}}</td>
             <td>{{p.title}}</td>
             <td>{{p.price}}</td>
@@ -31,4 +31,11 @@
     </table>
     <p></p>
 
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            <li class="page-item" data-ng-repeat="pageIndex in paginationArray">
+                <button class="page-link" data-ng-click="loadProducts(pageIndex)">{{pageIndex}}</button>
+            </li>
+        </ul>
+    </nav>
 </div>

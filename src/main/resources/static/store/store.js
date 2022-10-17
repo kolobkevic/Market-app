@@ -1,26 +1,31 @@
 angular.module('market-front').controller('storeController', function ($scope, $http, $location) {
     const contextPath = 'http://localhost:8189/market/';
+    let currentPageIndex = 1;
 
-    $scope.loadProducts = function () {
+    $scope.loadProducts = function (pageIndex = 1) {
+        currentPageIndex = pageIndex;
         $http({
             url: contextPath + 'api/v1/products',
             method: 'GET',
-
+            params: {p: pageIndex}
         }).then(function (response) {
             console.log(response);
-            $scope.productsList = response.data;
+            $scope.productsListPage = response.data;
+            $scope.paginationArray = $scope.generatePagesIndexes(1, $scope.productsListPage.totalPages);
         });
     };
 
-    $scope.loadFilteredProducts = function () {
+    $scope.loadFilteredProducts = function (pageIndex = 1) {
+        currentPageIndex = pageIndex;
         $http({
             url: contextPath + 'api/v1/products',
             method: 'GET',
             params: {minPrice: $scope.minPrice, maxPrice: $scope.maxPrice},
         }).then(function (response) {
-                console.log(response);
-                $scope.productsList = response.data;
-            });
+            console.log(response);
+            $scope.productsListPage = response.data;
+            $scope.paginationArray = $scope.generatePagesIndexes(1, $scope.productsListPage.totalPages);
+        });
     };
 
 
@@ -41,6 +46,14 @@ angular.module('market-front').controller('storeController', function ($scope, $
             alert(response.data.messages);
         });
     };
+
+    $scope.generatePagesIndexes = function (startPage, endPage) {
+        let arr = [];
+        for (let i = startPage; i < endPage + 1; i++) {
+            arr.push(i);
+        }
+        return arr;
+    }
 
     $scope.loadProducts();
 });

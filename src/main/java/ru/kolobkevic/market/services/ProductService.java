@@ -1,11 +1,12 @@
 package ru.kolobkevic.market.services;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import ru.kolobkevic.market.model.Product;
 import ru.kolobkevic.market.repositories.ProductRepository;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -17,8 +18,8 @@ public class ProductService {
         return productRepository.findById(id);
     }
 
-    public List<Product> findAll() {
-        return productRepository.findAll();
+    public Page<Product> findAll(int pageIndex, int pageSize) {
+        return productRepository.findAll(PageRequest.of(pageIndex, pageSize));
     }
 
     public void save(Product product) {
@@ -29,25 +30,15 @@ public class ProductService {
         productRepository.deleteById(id);
     }
 
-    public List<Product> findAllByPriceGreaterThanEqual(Double minPrice){
-        return productRepository.findAllByPriceGreaterThanEqual(minPrice);
+    public Page<Product> findAllByPriceGreaterThanEqual(int pageIndex, int pageSize, Double minPrice){
+        return productRepository.findAllByPriceGreaterThanEqual(PageRequest.of(pageIndex, pageSize), minPrice);
     }
 
-    public List<Product> findAllByPriceLessThanEqual(Double maxPrice){
-        return productRepository.findAllByPriceLessThanEqual(maxPrice);
+    public Page<Product> findAllByPriceLessThanEqual(int pageIndex, int pageSize, Double maxPrice){
+        return productRepository.findAllByPriceLessThanEqual(PageRequest.of(pageIndex, pageSize), maxPrice);
     }
 
-    public List<Product> findAllByPriceIsBetween(Double minPrice, Double maxPrice){
-        return productRepository.findAllByPriceIsBetween(minPrice, maxPrice);
-    }
-
-    public List<Product> filterByPrice(Double minPrice, Double maxPrice){
-        if (minPrice == null){
-            return productRepository.findAllByPriceLessThanEqual(maxPrice);
-        } else if (maxPrice == null) {
-            return productRepository.findAllByPriceGreaterThanEqual(minPrice);
-        } else {
-            return productRepository.findAllByPriceIsBetween(minPrice, maxPrice);
-        }
+    public Page<Product> findAllByPriceIsBetween(int pageIndex, int pageSize, Double minPrice, Double maxPrice){
+        return productRepository.findAllByPriceIsBetween(PageRequest.of(pageIndex, pageSize), minPrice, maxPrice);
     }
 }
