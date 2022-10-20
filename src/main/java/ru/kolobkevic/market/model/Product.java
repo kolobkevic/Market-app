@@ -1,23 +1,19 @@
-package ru.kolobkevic.market.model.dto;
+package ru.kolobkevic.market.model;
 
-import lombok.*;
+import lombok.Data;
 
 import javax.persistence.*;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@ToString
-@Table(name = "products")
-@Getter
-@Setter
 @Entity
+@Data
+@Table(name = "products")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
     @Column(name = "price")
-    private double price;
+    private Double price;
     @Column(name = "title")
     private String title;
 }
