@@ -7,27 +7,13 @@ angular.module('market-front').controller('storeController', function ($scope, $
         $http({
             url: contextPath + 'api/v1/products',
             method: 'GET',
-            params: {p: pageIndex}
+            params: {minPrice: $scope.minPrice, maxPrice: $scope.maxPrice, p: pageIndex},
         }).then(function (response) {
             console.log(response);
             $scope.productsListPage = response.data;
             $scope.paginationArray = $scope.generatePagesIndexes(1, $scope.productsListPage.totalPages);
         });
     };
-
-    $scope.loadFilteredProducts = function (pageIndex = 1) {
-        currentPageIndex = pageIndex;
-        $http({
-            url: contextPath + 'api/v1/products',
-            method: 'GET',
-            params: {minPrice: $scope.minPrice, maxPrice: $scope.maxPrice},
-        }).then(function (response) {
-            console.log(response);
-            $scope.productsListPage = response.data;
-            $scope.paginationArray = $scope.generatePagesIndexes(1, $scope.productsListPage.totalPages);
-        });
-    };
-
 
     $scope.navToEditProductPage = function (productId) {
         $location.path('/edit_product/' + productId);
