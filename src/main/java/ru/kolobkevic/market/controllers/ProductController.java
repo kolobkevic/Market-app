@@ -1,12 +1,11 @@
 package ru.kolobkevic.market.controllers;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 import ru.kolobkevic.market.dtos.ProductDto;
 import ru.kolobkevic.market.model.Product;
 import ru.kolobkevic.market.services.ProductService;
-
-import java.util.List;
 
 
 @RequiredArgsConstructor
@@ -16,17 +15,22 @@ public class ProductController {
     private final ProductService productService;
 
     @GetMapping
-    public List<Product> findAll(@RequestParam(required = false, name = "minPrice") Double minPrice, @RequestParam(required = false, name = "maxPrice") Double maxPrice){
+    public Page<ProductDto> findAll(@RequestParam(defaultValue = "1", name = "p") int pageIndex, @RequestParam(required = false, name = "minPrice") Double minPrice, @RequestParam(required = false, name = "maxPrice") Double maxPrice) {
+        int pageSize = 10;
+        if (pageIndex < 1) {
+            pageIndex = 1;
+        }
+
         if ((minPrice != null) && (maxPrice != null)) {
-            return productService.findAllByPriceIsBetween(minPrice, maxPrice);
+            return productService.findAllByPriceIsBetween(pageIndex - 1, pageSize, minPrice, maxPrice).map(ProductDto::new);
         }
-        if ((minPrice == null) && (maxPrice != null)){
-            return productService.findAllByPriceLessThanEqual(maxPrice);
+        if ((minPrice == null) && (maxPrice != null)) {
+            return productService.findAllByPriceLessThanEqual(pageIndex - 1, pageSize, maxPrice).map(ProductDto::new);
         }
-        if (minPrice != null){
-            return productService.findAllByPriceGreaterThanEqual(minPrice);
+        if (minPrice != null) {
+            return productService.findAllByPriceGreaterThanEqual(pageIndex - 1, pageSize, minPrice).map(ProductDto::new);
         }
-        return productService.findAll();
+        return productService.findAll(pageIndex - 1, pageSize).map(ProductDto::new);
     }
 
     @GetMapping("/{id}")
