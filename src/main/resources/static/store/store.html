@@ -20,6 +20,9 @@
             <td>{{p.title}}</td>
             <td>{{p.price}}</td>
             <td>
+                <button class="btn btn-primary" data-ng-click="addToCart(p.id)">В корзину</button>
+            </td>
+            <td>
                 <button class="btn btn-primary" data-ng-click="navToEditProductPage(p.id)">Изменить</button>
             </td>
             <td>

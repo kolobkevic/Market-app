@@ -33,6 +33,17 @@ angular.module('market-front').controller('storeController', function ($scope, $
         });
     };
 
+    $scope.addToCart = function (productId) {
+        $http({
+            url: contextPath + 'api/v1/cart/' + productId,
+            method: 'GET',
+        }).then(function successCallback(response) {
+            alert('Продукт добавлен в корзину');
+            $location.path('/store');
+            $scope.loadProducts();
+        });
+    };
+
     $scope.generatePagesIndexes = function (startPage, endPage) {
         let arr = [];
         for (let i = startPage; i < endPage + 1; i++) {
