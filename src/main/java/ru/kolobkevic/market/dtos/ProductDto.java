@@ -3,7 +3,7 @@ package ru.kolobkevic.market.dtos;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
-import ru.kolobkevic.market.model.Product;
+import ru.kolobkevic.market.entities.Product;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;

@@ -1,5 +1,7 @@
 DROP TABLE IF EXISTS products;
-DROP TABLE IF EXISTS customers;
+DROP TABLE IF EXISTS users CASCADE ;
+DROP TABLE IF EXISTS roles CASCADE ;
+DROP TABLE IF EXISTS user_roles CASCADE ;
 CREATE TABLE products
 (
     id    bigserial,
@@ -42,15 +44,45 @@ VALUES ('Молоко', 98.5),
        ('Водка', 749.99),
        ('Лимон', 40.0);
 
-CREATE TABLE customers
+CREATE TABLE users
 (
-    id      bigserial,
-    name    VARCHAR(255),
-    surname VARCHAR(255),
+    id       bigserial,
+    username VARCHAR(30) not null unique,
+    password VARCHAR(80) not null,
+    email    VARCHAR(50) not null unique,
     PRIMARY KEY (id)
 );
-INSERT INTO customers (name, surname)
-VALUES ('Vladimir', 'Putin'),
-       ('Joe', 'Biden'),
-       ('Emmanuel', 'Macron'),
-       ('Olaf', 'Scholz');
+INSERT INTO users (username, password, email)
+VALUES ('vladimir', '$2y$10$VM49AKABGnZR4BW5BbKPN.fkhoj79bKYmEV2BoMwG3E3SgIKwPtZC', 'putin@mail.ru'),
+       ('joe', '$2y$10$TmMSg69/d2fWQ7x91l8ZvOcLP5NW2.VCE1iteij/KMVGu2Z9.HWIO', 'biden@mail.us'),
+       ('emmanuel', '$2y$10$.XegeGgv6kO6gduizYG/BOvADGImYxc30HT6QdpCxNxWhClkP3czO', 'macron@mail.fr'),
+       ('olaf', '$2y$10$3qve0urEbVCAAqqRdqBw0OjjrlwMHJ7kmipmcef7qBYJWkZBI3kEm', 'scholz@mail.de');
+
+CREATE TABLE roles
+(
+    id   serial,
+    name VARCHAR(50) not null,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE user_roles
+(
+    user_id bigint not null,
+    role_id int    not null,
+    PRIMARY KEY (user_id, role_id),
+    FOREIGN KEY (user_id) REFERENCES users (id),
+    FOREIGN KEY (role_id) REFERENCES roles (id)
+);
+INSERT INTO roles (name)
+VALUES ('ROLE_USER'),
+       ('ROLE_MANAGER'),
+       ('ROLE_ADMIN');
+
+INSERT INTO user_roles (user_id, role_id)
+VALUES (1, 3),
+       (1, 2),
+       (1, 1),
+       (2, 1),
+       (2, 2),
+       (3, 1),
+       (4, 1);
