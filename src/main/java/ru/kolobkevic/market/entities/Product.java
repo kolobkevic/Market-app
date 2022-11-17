@@ -1,4 +1,4 @@
-package ru.kolobkevic.market.model;
+package ru.kolobkevic.market.entities;
 
 import lombok.Data;
 

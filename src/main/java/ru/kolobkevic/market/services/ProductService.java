@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-import ru.kolobkevic.market.model.Product;
+import ru.kolobkevic.market.entities.Product;
 import ru.kolobkevic.market.repositories.ProductRepository;
 
 import java.util.Optional;

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.kolobkevic.market.dtos.ProductDto;
 import ru.kolobkevic.market.exceptions.DataValidationException;
 import ru.kolobkevic.market.exceptions.ResourceNotFoundException;
-import ru.kolobkevic.market.model.Product;
+import ru.kolobkevic.market.entities.Product;
 import ru.kolobkevic.market.services.ProductService;
 
 import java.util.stream.Collectors;
