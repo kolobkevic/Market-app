@@ -7,7 +7,7 @@ angular.module('market-front').controller('cartController', function ($scope, $h
             method: 'GET',
         }).then(function (response) {
             console.log(response);
-            $scope.productsInCart = response.data;
+            $scope.Cart = response.data;
         });
     };
 

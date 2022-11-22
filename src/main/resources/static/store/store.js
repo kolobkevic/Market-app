@@ -35,7 +35,7 @@ angular.module('market-front').controller('storeController', function ($scope, $
 
     $scope.addToCart = function (productId) {
         $http({
-            url: contextPath + 'api/v1/cart/' + productId,
+            url: contextPath + 'api/v1/cart/add/' + productId,
             method: 'GET',
         }).then(function successCallback(response) {
             alert('Продукт добавлен в корзину');

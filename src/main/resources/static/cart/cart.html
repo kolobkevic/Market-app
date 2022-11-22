@@ -4,19 +4,18 @@
     <table class="table">
         <thead>
         <tr>
-            <td>ID</td>
             <td>Название</td>
+            <td>Количество</td>
             <td>Цена</td>
-            <td></td>
         </tr>
         </thead>
         <tbody>
-        <tr data-ng-repeat="p in productsInCart">
-            <td>{{p.id}}</td>
-            <td>{{p.title}}</td>
-            <td>{{p.price}}</td>
+        <tr data-ng-repeat="c in Cart.orderItemList">
+            <td>{{c.productTitle}}</td>
+            <td>{{c.quantity}}</td>
+            <td>{{c.price + 'x' + c.quantity + '=' + c.totalPrice}}</td>
             <td>
-                <button class="btn btn-danger" data-ng-click="deleteFromCart(p.id)">Удалить</button>
+                <button class="btn btn-danger" data-ng-click="deleteFromCart(c.id)">Удалить</button>
             </td>
         </tr>
         </tbody>
