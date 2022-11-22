@@ -2,36 +2,28 @@ package ru.kolobkevic.market.controllers;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import ru.kolobkevic.market.dtos.ProductDto;
-import ru.kolobkevic.market.exceptions.ResourceNotFoundException;
-import ru.kolobkevic.market.services.ProductService;
-
-import java.util.Collections;
-import java.util.List;
+import ru.kolobkevic.market.dtos.Cart;
+import ru.kolobkevic.market.services.CartService;
 
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/cart")
 public class CartController {
-    private final ProductService productService;
-    private final List<ProductDto> productList;
+    private final CartService cartService;
+
 
     @GetMapping
-    public List<ProductDto> findAll() {
-        if (productList.isEmpty()){
-            return Collections.emptyList();
-        }
-        return productList;
+    public Cart getCurrentCart() {
+        return cartService.getCurrentCart();
     }
 
-    @GetMapping("/{id}")
-    public void findById(@PathVariable Long id) {
-        productList.add(new ProductDto(productService.findById(id).orElseThrow(() ->
-                new ResourceNotFoundException("Product not found"))));
+    @GetMapping("/add/{id}")
+    public void addById(@PathVariable Long id) {
+        cartService.addProductById(id);
     }
 
-    @GetMapping("delete/{id}")
-    public void deleteProduct(@PathVariable Long id) {
-        productList.removeIf(productDto -> productDto.getId().equals(id));
+    @GetMapping("/clear")
+    public void clearCart() {
+        cartService.clear();
     }
 }
