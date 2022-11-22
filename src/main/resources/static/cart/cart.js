@@ -14,7 +14,7 @@ angular.module('market-front').controller('cartController', function ($scope, $h
     $scope.deleteFromCart = function (productId) {
         $http({
             url: contextPath + 'api/v1/cart/delete/' + productId,
-            method: 'GET',
+            method: 'DELETE',
         }).then(function successCallback(response) {
             alert('Продукт успешно удален');
             $location.path('/cart');

@@ -31,6 +31,10 @@ public class CartService {
         }
     }
 
+    public void removeProductById(Long productId){
+        getCurrentCart().removeProduct(productId);
+    }
+
     public void clear(){
         getCurrentCart().clear();
     }
