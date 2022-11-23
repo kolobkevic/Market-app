@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS products;
+DROP TABLE IF EXISTS products CASCADE;
 DROP TABLE IF EXISTS users CASCADE;
 DROP TABLE IF EXISTS roles CASCADE;
 DROP TABLE IF EXISTS user_roles CASCADE;
@@ -103,12 +103,10 @@ CREATE TABLE order_items
 (
     id          bigserial,
     product_id  bigint,
-    user_id     bigint,
     order_id    bigint,
     quantity    int,
     price       int,
     total_price int,
     FOREIGN KEY (product_id) REFERENCES products (id),
-    FOREIGN KEY (user_id) REFERENCES users (id),
     FOREIGN KEY (order_id) REFERENCES orders (id)
 );
