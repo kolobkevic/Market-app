@@ -7,7 +7,7 @@ CREATE TABLE products
 (
     id    bigserial,
     title VARCHAR(255),
-    price REAL,
+    price int not null,
     PRIMARY KEY (id)
 );
 INSERT INTO products (title, price)
@@ -102,11 +102,11 @@ CREATE TABLE orders
 CREATE TABLE order_items
 (
     id          bigserial,
-    product_id  bigint,
-    order_id    bigint,
-    quantity    int,
-    price       int,
-    total_price int,
+    product_id  bigint not null,
+    order_id    bigint not null,
+    quantity    int not null,
+    price       int not null,
+    total_price int not null,
     FOREIGN KEY (product_id) REFERENCES products (id),
     FOREIGN KEY (order_id) REFERENCES orders (id)
 );
