@@ -2,6 +2,7 @@ DROP TABLE IF EXISTS products;
 DROP TABLE IF EXISTS users CASCADE;
 DROP TABLE IF EXISTS roles CASCADE;
 DROP TABLE IF EXISTS user_roles CASCADE;
+
 CREATE TABLE products
 (
     id    bigserial,
@@ -86,6 +87,7 @@ VALUES (1, 3),
        (2, 2),
        (3, 1),
        (4, 1);
+
 CREATE TABLE orders
 (
     id           bigserial,
