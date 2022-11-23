@@ -1,7 +1,7 @@
 DROP TABLE IF EXISTS products;
-DROP TABLE IF EXISTS users CASCADE ;
-DROP TABLE IF EXISTS roles CASCADE ;
-DROP TABLE IF EXISTS user_roles CASCADE ;
+DROP TABLE IF EXISTS users CASCADE;
+DROP TABLE IF EXISTS roles CASCADE;
+DROP TABLE IF EXISTS user_roles CASCADE;
 CREATE TABLE products
 (
     id    bigserial,
@@ -86,3 +86,27 @@ VALUES (1, 3),
        (2, 2),
        (3, 1),
        (4, 1);
+CREATE TABLE orders
+(
+    id           bigserial,
+    user_id      bigint not null,
+    total_price  int    not null,
+    address      varchar(255),
+    phone_number varchar(50),
+    FOREIGN KEY (user_id) REFERENCES users (id),
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE order_items
+(
+    id          bigserial,
+    product_id  bigint,
+    user_id     bigint,
+    order_id    bigint,
+    quantity    int,
+    price       int,
+    total_price int,
+    FOREIGN KEY (product_id) REFERENCES products (id),
+    FOREIGN KEY (user_id) REFERENCES users (id),
+    FOREIGN KEY (order_id) REFERENCES orders (id)
+);
