@@ -1,17 +1,19 @@
 package ru.kolobkevic.market.dtos;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.kolobkevic.market.entities.Product;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class OrderItemDto {
     private Long productId;
     private String productTitle;
     private int quantity;
-    private double price;
-    private double totalPrice;
+    private Double price;
+    private Double totalPrice;
 
     public OrderItemDto(Product product) {
         this.productId = product.getId();

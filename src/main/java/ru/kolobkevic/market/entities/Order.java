@@ -1,6 +1,5 @@
 package ru.kolobkevic.market.entities;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -13,7 +12,6 @@ import java.util.List;
 @Entity
 @Table(name = "orders")
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 public class Order {
     @Id
@@ -25,17 +23,17 @@ public class Order {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "order")
-    private List<OrderItem> orderItem;
+    @OneToMany(mappedBy = "order", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    private List<OrderItem> items;
 
     @Column(name = "total_price")
-    private Integer total_price;
+    private Double totalPrice;
 
     @Column(name = "address")
     private String address;
 
     @Column(name = "phone_number")
-    private String phone_number;
+    private String phoneNumber;
 
     @CreationTimestamp
     @Column(name = "created_at")
@@ -44,4 +42,5 @@ public class Order {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
 }

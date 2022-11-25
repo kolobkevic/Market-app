@@ -31,10 +31,10 @@ public class OrderItem {
     private Integer quantity;
 
     @Column(name = "price")
-    private Long price;
+    private Double price;
 
     @Column(name = "total_price")
-    private Long pricePerProduct;
+    private Double pricePerProduct;
 
     @CreationTimestamp
     @Column(name = "created_at")

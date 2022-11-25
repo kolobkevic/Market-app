@@ -102,6 +102,9 @@ CREATE TABLE orders
     updated_at   TIMESTAMP DEFAULT current_timestamp
 );
 
+INSERT INTO orders(user_id, total_price, address, phone_number)
+VALUES (1, 394, 'adress1', '12345');
+
 CREATE TABLE order_items
 (
     id                BIGSERIAL PRIMARY KEY,
@@ -113,3 +116,6 @@ CREATE TABLE order_items
     created_at        TIMESTAMP DEFAULT current_timestamp,
     updated_at        TIMESTAMP DEFAULT current_timestamp
 );
+
+INSERT INTO order_items(product_id, order_id, quantity, price_per_product, price)
+VALUES (1, 1, 4, 98.5, 394);
