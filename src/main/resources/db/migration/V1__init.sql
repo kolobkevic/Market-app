@@ -5,11 +5,11 @@ DROP TABLE IF EXISTS user_roles CASCADE;
 
 CREATE TABLE products
 (
-    id    BIGSERIAL PRIMARY KEY,
-    title VARCHAR(255),
-    price INT NOT NULL,
-    createdAt TIMESTAMP DEFAULT NOT NULL,
-    updatedAt TIMESTAMP
+    id         BIGSERIAL PRIMARY KEY,
+    title      VARCHAR(255),
+    price      INT NOT NULL,
+    created_at TIMESTAMP DEFAULT current_timestamp,
+    updated_at TIMESTAMP DEFAULT current_timestamp
 );
 INSERT INTO products (title, price)
 VALUES ('Молоко', 98.5),
@@ -48,12 +48,12 @@ VALUES ('Молоко', 98.5),
 
 CREATE TABLE users
 (
-    id       BIGSERIAL PRIMARY KEY,
-    username VARCHAR(30) NOT NULL UNIQUE,
-    password VARCHAR(80) NOT NULL,
-    email    VARCHAR(50) NOT NULL UNIQUE,
-    createdAt TIMESTAMP DEFAULT NOT NULL,
-    updatedAt TIMESTAMP
+    id         BIGSERIAL PRIMARY KEY,
+    username   VARCHAR(30) NOT NULL UNIQUE,
+    password   VARCHAR(80) NOT NULL,
+    email      VARCHAR(50) NOT NULL UNIQUE,
+    created_at TIMESTAMP DEFAULT current_timestamp,
+    updated_at TIMESTAMP DEFAULT current_timestamp
 );
 INSERT INTO users (username, password, email)
 VALUES ('vladimir', '$2y$10$VM49AKABGnZR4BW5BbKPN.fkhoj79bKYmEV2BoMwG3E3SgIKwPtZC', 'putin@mail.ru'),
@@ -63,18 +63,18 @@ VALUES ('vladimir', '$2y$10$VM49AKABGnZR4BW5BbKPN.fkhoj79bKYmEV2BoMwG3E3SgIKwPtZ
 
 CREATE TABLE roles
 (
-    id   SERIAL PRIMARY KEY,
-    name VARCHAR(50) NOT NULL,
-    createdAt TIMESTAMP DEFAULT NOT NULL,
-    updatedAt TIMESTAMP
+    id         SERIAL PRIMARY KEY,
+    name       VARCHAR(50) NOT NULL,
+    created_at TIMESTAMP DEFAULT current_timestamp,
+    updated_at TIMESTAMP DEFAULT current_timestamp
 );
 
 CREATE TABLE user_roles
 (
-    user_id BIGINT NOT NULL REFERENCES  users(id),
-    role_id INT NOT NULL REFERENCES roles(id),
-    createdAt TIMESTAMP DEFAULT NOT NULL,
-    updatedAt TIMESTAMP,
+    user_id    BIGINT NOT NULL REFERENCES users (id),
+    role_id    INT    NOT NULL REFERENCES roles (id),
+    created_at TIMESTAMP DEFAULT current_timestamp,
+    updated_at TIMESTAMP DEFAULT current_timestamp,
     PRIMARY KEY (user_id, role_id)
 );
 INSERT INTO roles (name)
@@ -94,22 +94,22 @@ VALUES (1, 3),
 CREATE TABLE orders
 (
     id           BIGSERIAL PRIMARY KEY,
-    user_id      BIGINT NOT NULL REFERENCES users(id),
+    user_id      BIGINT NOT NULL REFERENCES users (id),
     total_price  INT    NOT NULL,
     address      VARCHAR(255),
     phone_number VARCHAR(50),
-    createdAt TIMESTAMP DEFAULT NOT NULL,
-    updatedAt TIMESTAMP
+    created_at   TIMESTAMP DEFAULT current_timestamp,
+    updated_at   TIMESTAMP DEFAULT current_timestamp
 );
 
 CREATE TABLE order_items
 (
     id                BIGSERIAL PRIMARY KEY,
-    product_id        BIGINT NOT NULL REFERENCES products(id),
-    order_id          BIGINT NOT NULL REFERENCES orders(id),
-    quantity          INT NOT NULL,
-    price_per_product INT NOT NULL,
-    price             INT NOT NULL,
-    createdAt TIMESTAMP DEFAULT NOT NULL,
-    updatedAt TIMESTAMP
+    product_id        BIGINT NOT NULL REFERENCES products (id),
+    order_id          BIGINT NOT NULL REFERENCES orders (id),
+    quantity          INT    NOT NULL,
+    price_per_product INT    NOT NULL,
+    price             INT    NOT NULL,
+    created_at        TIMESTAMP DEFAULT current_timestamp,
+    updated_at        TIMESTAMP DEFAULT current_timestamp
 );
