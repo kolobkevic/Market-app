@@ -5,10 +5,11 @@ DROP TABLE IF EXISTS user_roles CASCADE;
 
 CREATE TABLE products
 (
-    id    bigserial,
+    id    BIGSERIAL PRIMARY KEY,
     title VARCHAR(255),
-    price int not null,
-    PRIMARY KEY (id)
+    price INT NOT NULL,
+    createdAt TIMESTAMP DEFAULT NOT NULL,
+    updatedAt TIMESTAMP
 );
 INSERT INTO products (title, price)
 VALUES ('Молоко', 98.5),
@@ -47,11 +48,12 @@ VALUES ('Молоко', 98.5),
 
 CREATE TABLE users
 (
-    id       bigserial,
-    username VARCHAR(30) not null unique,
-    password VARCHAR(80) not null,
-    email    VARCHAR(50) not null unique,
-    PRIMARY KEY (id)
+    id       BIGSERIAL PRIMARY KEY,
+    username VARCHAR(30) NOT NULL UNIQUE,
+    password VARCHAR(80) NOT NULL,
+    email    VARCHAR(50) NOT NULL UNIQUE,
+    createdAt TIMESTAMP DEFAULT NOT NULL,
+    updatedAt TIMESTAMP
 );
 INSERT INTO users (username, password, email)
 VALUES ('vladimir', '$2y$10$VM49AKABGnZR4BW5BbKPN.fkhoj79bKYmEV2BoMwG3E3SgIKwPtZC', 'putin@mail.ru'),
@@ -61,18 +63,19 @@ VALUES ('vladimir', '$2y$10$VM49AKABGnZR4BW5BbKPN.fkhoj79bKYmEV2BoMwG3E3SgIKwPtZ
 
 CREATE TABLE roles
 (
-    id   serial,
-    name VARCHAR(50) not null,
-    PRIMARY KEY (id)
+    id   SERIAL PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    createdAt TIMESTAMP DEFAULT NOT NULL,
+    updatedAt TIMESTAMP
 );
 
 CREATE TABLE user_roles
 (
-    user_id bigint not null,
-    role_id int    not null,
-    PRIMARY KEY (user_id, role_id),
-    FOREIGN KEY (user_id) REFERENCES users (id),
-    FOREIGN KEY (role_id) REFERENCES roles (id)
+    user_id BIGINT NOT NULL REFERENCES  users(id),
+    role_id INT NOT NULL REFERENCES roles(id),
+    createdAt TIMESTAMP DEFAULT NOT NULL,
+    updatedAt TIMESTAMP,
+    PRIMARY KEY (user_id, role_id)
 );
 INSERT INTO roles (name)
 VALUES ('ROLE_USER'),
@@ -90,23 +93,23 @@ VALUES (1, 3),
 
 CREATE TABLE orders
 (
-    id           bigserial,
-    user_id      bigint not null,
-    total_price  int    not null,
-    address      varchar(255),
-    phone_number varchar(50),
-    FOREIGN KEY (user_id) REFERENCES users (id),
-    PRIMARY KEY (id)
+    id           BIGSERIAL PRIMARY KEY,
+    user_id      BIGINT NOT NULL REFERENCES users(id),
+    total_price  INT    NOT NULL,
+    address      VARCHAR(255),
+    phone_number VARCHAR(50),
+    createdAt TIMESTAMP DEFAULT NOT NULL,
+    updatedAt TIMESTAMP
 );
 
 CREATE TABLE order_items
 (
-    id          bigserial,
-    product_id  bigint not null,
-    order_id    bigint not null,
-    quantity    int not null,
-    price       int not null,
-    total_price int not null,
-    FOREIGN KEY (product_id) REFERENCES products (id),
-    FOREIGN KEY (order_id) REFERENCES orders (id)
+    id                BIGSERIAL PRIMARY KEY,
+    product_id        BIGINT NOT NULL REFERENCES products(id),
+    order_id          BIGINT NOT NULL REFERENCES orders(id),
+    quantity          INT NOT NULL,
+    price_per_product INT NOT NULL,
+    price             INT NOT NULL,
+    createdAt TIMESTAMP DEFAULT NOT NULL,
+    updatedAt TIMESTAMP
 );

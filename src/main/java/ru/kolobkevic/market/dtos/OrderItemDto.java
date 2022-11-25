@@ -6,14 +6,14 @@ import ru.kolobkevic.market.entities.Product;
 
 @Data
 @NoArgsConstructor
-public class OrderItem {
+public class OrderItemDto {
     private Long productId;
     private String productTitle;
     private int quantity;
     private double price;
     private double totalPrice;
 
-    public OrderItem(Product product) {
+    public OrderItemDto(Product product) {
         this.productId = product.getId();
         this.productTitle = product.getTitle();
         this.quantity = 1;

@@ -9,7 +9,7 @@ import java.util.List;
 
 @Data
 public class Cart {
-    private List<OrderItem> orderItemList;
+    private List<OrderItemDto> orderItemList;
     private double totalPrice;
 
     public Cart() {
@@ -17,7 +17,7 @@ public class Cart {
     }
 
     public boolean addProductById(Long id) {
-        for (OrderItem orderItem : orderItemList) {
+        for (OrderItemDto orderItem : orderItemList) {
             if (orderItem.getProductId().equals(id)) {
                 orderItem.changeQuantity(1);
                 recalculate();
@@ -28,9 +28,9 @@ public class Cart {
     }
 
     public void decreaseProductById(Long id) {
-        Iterator<OrderItem> iter = orderItemList.iterator();
+        Iterator<OrderItemDto> iter = orderItemList.iterator();
         while (iter.hasNext()) {
-            OrderItem orderItem = iter.next();
+            OrderItemDto orderItem = iter.next();
             if (orderItem.getProductId().equals(id)) {
                 orderItem.changeQuantity(-1);
                 if (orderItem.getQuantity() <= 0) {
@@ -46,7 +46,7 @@ public class Cart {
         if (addProductById(product.getId())) {
             return;
         }
-        orderItemList.add(new OrderItem(product));
+        orderItemList.add(new OrderItemDto(product));
         recalculate();
     }
 
@@ -57,7 +57,7 @@ public class Cart {
 
     private void recalculate() {
         totalPrice = 0;
-        totalPrice = orderItemList.stream().mapToDouble(OrderItem::getPrice).sum();
+        totalPrice = orderItemList.stream().mapToDouble(OrderItemDto::getPrice).sum();
     }
 
     public void clear() {
