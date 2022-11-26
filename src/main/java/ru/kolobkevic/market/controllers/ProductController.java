@@ -2,6 +2,7 @@ package ru.kolobkevic.market.controllers;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
@@ -53,16 +54,19 @@ public class ProductController {
                 new ResourceNotFoundException("Product not found")));
     }
 
+    @Secured("ROLE_ADMIN")
     @DeleteMapping("delete/{id}")
     public void deleteProduct(@PathVariable Long id) {
         productService.deleteById(id);
     }
 
+    @Secured({"ROLE_ADMIN", "ROLE_MANAGER"})
     @PutMapping
     public ProductDto updateProduct(@RequestBody ProductDto productDto) {
         return productConverter.entityToDto(productService.update(productDto));
     }
 
+    @Secured("ROLE_ADMIN")
     @PostMapping
     public ProductDto saveNewProduct(@RequestBody @Validated ProductDto productDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {

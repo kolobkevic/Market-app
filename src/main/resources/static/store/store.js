@@ -29,7 +29,7 @@ angular.module('market-front').controller('storeController', function ($scope, $
             $location.path('/store');
             $scope.loadProducts();
         }, function failureCallback(response) {
-            alert(response.data.messages);
+            alert('Недостаточно прав для удаления');
         });
     };
 
