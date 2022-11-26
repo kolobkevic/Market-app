@@ -7,7 +7,7 @@ angular.module('market-front').controller('cartController', function ($scope, $h
             method: 'GET',
         }).then(function (response) {
             console.log(response);
-            $scope.Cart = response.data;
+            $scope.cart = response.data;
         });
     };
 
@@ -38,6 +38,10 @@ angular.module('market-front').controller('cartController', function ($scope, $h
             .then(function (response) {
                 $scope.loadCart();
             });
+    }
+
+    $scope.disabledCheckOut = function () {
+        alert("Для оформления заказа необходимо войти в учетную запись");
     }
 
     $scope.loadCart();

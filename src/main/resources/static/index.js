@@ -1,6 +1,6 @@
 (function () {
     angular
-        .module('market-front', ['ngRoute'])
+        .module('market-front', ['ngRoute', 'ngStorage'])
         .config(config)
         .run(run);
 
@@ -31,11 +31,48 @@
             });
     }
 
-    function run($rootScope, $http) {
+    function run($rootScope, $http, $localStorage) {
+        if ($localStorage.springWebUser) {
+            $http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.springWebUser.token;
+        }
     }
 })();
 
-angular.module('market-front').controller('indexController', function ($rootScope, $scope, $http) {
+angular.module('market-front').controller('indexController', function ($rootScope, $scope, $http, $location, $localStorage) {
     const contextPath = 'http://localhost:8189/market';
 
+    $scope.tryToAuth = function () {
+        $http.post(contextPath + '/auth', $scope.user)
+            .then(function successCallback(response) {
+                if (response.data.token) {
+                    $http.defaults.headers.common.Authorization = 'Bearer ' + response.data.token;
+                    $localStorage.springWebUser = {username: $scope.user.username, token: response.data.token};
+
+                    $scope.user.username = null;
+                    $scope.user.password = null;
+
+                    $location.path('/');
+                }
+            }, function errorCallback(response) {
+            });
+    };
+
+    $scope.tryToLogout = function () {
+        $scope.clearUser();
+        $scope.user = null;
+        $location.path('/');
+    };
+
+    $scope.clearUser = function () {
+        delete $localStorage.springWebUser;
+        $http.defaults.headers.common.Authorization = '';
+    };
+
+    $rootScope.isUserLoggedIn = function () {
+        if ($localStorage.springWebUser) {
+            return true;
+        } else {
+            return false;
+        }
+    };
 });
