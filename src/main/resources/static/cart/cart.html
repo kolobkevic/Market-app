@@ -13,7 +13,7 @@
         <tr data-ng-repeat="c in Cart.orderItemList">
             <td>{{c.productTitle}}</td>
             <td>{{c.quantity}}</td>
-            <td>{{c.price_per_product + 'x' + c.quantity + '=' + c.price}}</td>
+            <td>{{c.pricePerProduct + 'x' + c.quantity + '=' + c.price}}</td>
             <td>
                 <button class="btn btn-danger" data-ng-click="deleteFromCart(c.id)">Удалить</button>
             </td>
@@ -25,6 +25,7 @@
         <input class="form-control" type="text" placeholder="Номер телефона получателя" ng-model="orderDetails.phone">
         <p></p>
         <input class="form-control" type="text" placeholder="Адрес доставки" ng-model="orderDetails.adress">
+        <p></p>
         <button type="submit" class="btn btn-primary">Оформить заказ</button>
     </form>
     <p></p>

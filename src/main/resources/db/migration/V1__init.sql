@@ -2,12 +2,14 @@ DROP TABLE IF EXISTS products CASCADE;
 DROP TABLE IF EXISTS users CASCADE;
 DROP TABLE IF EXISTS roles CASCADE;
 DROP TABLE IF EXISTS user_roles CASCADE;
+DROP TABLE IF EXISTS orders CASCADE;
+DROP TABLE IF EXISTS order_items CASCADE;
 
 CREATE TABLE products
 (
     id         BIGSERIAL PRIMARY KEY,
     title      VARCHAR(255),
-    price      INT NOT NULL,
+    price      REAL NOT NULL,
     created_at TIMESTAMP DEFAULT current_timestamp,
     updated_at TIMESTAMP DEFAULT current_timestamp
 );
@@ -95,7 +97,7 @@ CREATE TABLE orders
 (
     id           BIGSERIAL PRIMARY KEY,
     user_id      BIGINT NOT NULL REFERENCES users (id),
-    total_price  INT    NOT NULL,
+    total_price  REAL    NOT NULL,
     address      VARCHAR(255),
     phone_number VARCHAR(50),
     created_at   TIMESTAMP DEFAULT current_timestamp,
@@ -111,8 +113,8 @@ CREATE TABLE order_items
     product_id        BIGINT NOT NULL REFERENCES products (id),
     order_id          BIGINT NOT NULL REFERENCES orders (id),
     quantity          INT    NOT NULL,
-    price_per_product INT    NOT NULL,
-    price             INT    NOT NULL,
+    price_per_product REAL    NOT NULL,
+    price             REAL    NOT NULL,
     created_at        TIMESTAMP DEFAULT current_timestamp,
     updated_at        TIMESTAMP DEFAULT current_timestamp
 );

@@ -4,9 +4,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import ru.kolobkevic.market.dtos.ProductDto;
 import ru.kolobkevic.market.entities.Product;
+import ru.kolobkevic.market.exceptions.ResourceNotFoundException;
 import ru.kolobkevic.market.repositories.ProductRepository;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Service
@@ -22,12 +25,21 @@ public class ProductService {
         return productRepository.findAll(PageRequest.of(pageIndex, pageSize));
     }
 
-    public void save(Product product) {
-        productRepository.save(product);
+    public Product save(Product product) {
+        return productRepository.save(product);
     }
 
     public void deleteById(Long id) {
         productRepository.deleteById(id);
+    }
+
+    @Transactional
+    public Product update(ProductDto productDto){
+        Product product = productRepository.findById(productDto.getId()).orElseThrow(
+                ()->new ResourceNotFoundException("Продукт не найден в базе, id: " + productDto.getId()));
+        product.setPrice(product.getPrice());
+        product.setTitle(product.getTitle());
+        return product;
     }
 
     public Page<Product> findAllByPriceGreaterThanEqual(int pageIndex, int pageSize, Double minPrice){

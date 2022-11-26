@@ -19,6 +19,7 @@ public class OrderConverter {
     public OrderDto entityToDto(Order order) {
         OrderDto orderDto = new OrderDto();
         orderDto.setAddress(order.getAddress());
+        orderDto.setId(order.getId());
         orderDto.setUsername(order.getUser().getUsername());
         orderDto.setPhoneNumber(order.getPhoneNumber());
         orderDto.setTotalPrice(order.getTotalPrice());

@@ -6,6 +6,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import ru.kolobkevic.market.converters.ProductConverter;
 import ru.kolobkevic.market.dtos.ProductDto;
 import ru.kolobkevic.market.exceptions.DataValidationException;
 import ru.kolobkevic.market.exceptions.ResourceNotFoundException;
@@ -20,6 +21,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/v1/products")
 public class ProductController {
     private final ProductService productService;
+    private final ProductConverter productConverter;
 
     @GetMapping
     public Page<ProductDto> findAll(@RequestParam(defaultValue = "1", name = "p") int pageIndex,
@@ -32,22 +34,22 @@ public class ProductController {
 
         if ((minPrice != null) && (maxPrice != null)) {
             return productService.findAllByPriceIsBetween(pageIndex - 1, pageSize, minPrice, maxPrice)
-                    .map(ProductDto::new);
+                    .map(productConverter::entityToDto);
         }
         if ((minPrice == null) && (maxPrice != null)) {
             return productService.findAllByPriceLessThanEqual(pageIndex - 1, pageSize, maxPrice)
-                    .map(ProductDto::new);
+                    .map(productConverter::entityToDto);
         }
         if (minPrice != null) {
             return productService.findAllByPriceGreaterThanEqual(pageIndex - 1, pageSize, minPrice)
-                    .map(ProductDto::new);
+                    .map(productConverter::entityToDto);
         }
-        return productService.findAll(pageIndex - 1, pageSize).map(ProductDto::new);
+        return productService.findAll(pageIndex - 1, pageSize).map(productConverter::entityToDto);
     }
 
     @GetMapping("/{id}")
     public ProductDto findById(@PathVariable Long id) {
-        return new ProductDto(productService.findById(id).orElseThrow(() ->
+        return productConverter.entityToDto(productService.findById(id).orElseThrow(() ->
                 new ResourceNotFoundException("Product not found")));
     }
 
@@ -57,20 +59,18 @@ public class ProductController {
     }
 
     @PutMapping
-    public void saveOrUpdate(@RequestBody Product product) {
-        productService.save(product);
+    public ProductDto updateProduct(@RequestBody ProductDto productDto) {
+        return productConverter.entityToDto(productService.update(productDto));
     }
 
     @PostMapping
-    public ProductDto save(@RequestBody @Validated ProductDto productDto, BindingResult bindingResult) {
+    public ProductDto saveNewProduct(@RequestBody @Validated ProductDto productDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new DataValidationException(bindingResult.getAllErrors().stream()
                     .map(ObjectError::getDefaultMessage).collect(Collectors.toList()));
         }
-        Product product = new Product();
-        product.setPrice(productDto.getPrice());
-        product.setTitle(productDto.getTitle());
-        productService.save(product);
-        return new ProductDto(product);
+        Product product = productConverter.dtoToEntity(productDto);
+        product = productService.save(product);
+        return productConverter.entityToDto(product);
     }
 }

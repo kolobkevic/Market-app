@@ -10,7 +10,7 @@ import java.util.List;
 @Data
 public class Cart {
     private List<OrderItemDto> orderItemList;
-    private double totalPrice;
+    private Double totalPrice;
 
     public Cart() {
         this.orderItemList = new ArrayList<>();
@@ -56,12 +56,12 @@ public class Cart {
     }
 
     private void recalculate() {
-        totalPrice = 0;
+        totalPrice = 0d;
         totalPrice = orderItemList.stream().mapToDouble(OrderItemDto::getPrice).sum();
     }
 
     public void clear() {
         orderItemList.clear();
-        totalPrice = 0;
+        totalPrice = 0d;
     }
 }

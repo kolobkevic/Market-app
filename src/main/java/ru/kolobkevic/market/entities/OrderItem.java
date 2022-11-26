@@ -1,6 +1,5 @@
 package ru.kolobkevic.market.entities;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -12,7 +11,6 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "order_items")
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 public class OrderItem {
     @Id
@@ -33,7 +31,7 @@ public class OrderItem {
     @Column(name = "price")
     private Double price;
 
-    @Column(name = "total_price")
+    @Column(name = "price_per_product")
     private Double pricePerProduct;
 
     @CreationTimestamp
