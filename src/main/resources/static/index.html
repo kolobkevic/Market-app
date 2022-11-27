@@ -30,6 +30,10 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#!/cart">Корзина</a>
                     </li>
+                    <li class="nav-item" ng-show="isUserLoggedIn()">
+                        <a class="nav-link" href="#!/orders">Мои заказы</a>
+                    </li>
+
                     <li class="nav-item" ng-show="!isUserLoggedIn()">
                         <form class="align-middle" ng-submit="tryToAuth()">
                             <div class="input-group input-group-sm" style="padding: 4px;">
@@ -46,6 +50,7 @@
                         </form>
                     </li>
                     <li class="nav-item" ng-show="isUserLoggedIn()" style="padding: 4px;">
+                        <h6 ng-model="user">{{user.username}}</h6>
                         <button class="btn btn-outline-secondary btn-sm" ng-click="tryToLogout()">Выйти</button>
                     </li>
                 </ul>
@@ -61,6 +66,7 @@
     <script src="edit_product/edit_product.js"></script>
     <script src="create_product/create_product.js"></script>
     <script src="cart/cart.js"></script>
+    <script src="orders/orders.js"></script>
 </div>
 </body>
 </html>
