@@ -33,7 +33,28 @@
 
     function run($rootScope, $http, $localStorage) {
         if ($localStorage.springWebUser) {
-            $http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.springWebUser.token;
+            try {
+                let jwt = $localStorage.springWebUser.token;
+                let payload = JSON.parse(atob(jwt.split('.')[1]));
+                let currentTime = parseInt(new Date().getTime() / 1000);
+                if (currentTime > payload.exp) {
+                    console.log("Token is expired!!!");
+                    delete $localStorage.springWebUser;
+                    $http.defaults.headers.common.Authorization = '';
+                }
+            } catch (e) {
+            }
+
+            if ($localStorage.springWebUser) {
+                $http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.springWebUser.token;
+            }
+        }
+        if (!$localStorage.springWebGuestCartId) {
+            $http.get('http://localhost:8189/market/api/v1/cart/generate')
+                .then(function successCallback(response) {
+                    console.log(response);
+                    $localStorage.springWebGuestCartId = response.data.value;
+                });
         }
     }
 })();
@@ -50,6 +71,10 @@ angular.module('market-front').controller('indexController', function ($rootScop
                     $scope.user.username = null;
                     $scope.user.password = null;
 
+                    $http.get(contextPath + '/api/v1/cart/' + $localStorage.springWebGuestCartId + '/merge')
+                        .then(function successCallback(response) {
+                        });
+
                     $location.path('/');
                 }
             }, function errorCallback(response) {
@@ -64,6 +89,7 @@ angular.module('market-front').controller('indexController', function ($rootScop
 
     $scope.clearUser = function () {
         delete $localStorage.springWebUser;
+        delete $localStorage.springWebGuestCartId;
         $http.defaults.headers.common.Authorization = '';
     };
 

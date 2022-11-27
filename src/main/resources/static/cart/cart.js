@@ -1,9 +1,9 @@
-angular.module('market-front').controller('cartController', function ($scope, $http, $location) {
+angular.module('market-front').controller('cartController', function ($scope, $http, $location, $localStorage) {
     const contextPath = 'http://localhost:8189/market/';
 
     $scope.loadCart = function () {
         $http({
-            url: contextPath + 'api/v1/cart',
+            url: contextPath + 'api/v1/cart/' + $localStorage.springWebGuestCartId,
             method: 'GET',
         }).then(function (response) {
             console.log(response);
@@ -13,9 +13,10 @@ angular.module('market-front').controller('cartController', function ($scope, $h
 
     $scope.deleteFromCart = function (productId) {
         $http({
-            url: contextPath + 'api/v1/cart/delete/' + productId,
-            method: 'DELETE',
+            url: contextPath + 'api/v1/cart/' + $localStorage.springWebGuestCartId + '/delete/' + productId,
+            method: 'GET',
         }).then(function successCallback(response) {
+            console.log(response);
             alert('Продукт успешно удален');
             $location.path('/cart');
             $scope.loadCart();
@@ -25,17 +26,19 @@ angular.module('market-front').controller('cartController', function ($scope, $h
     $scope.createOrder = function () {
         $http({
             url: contextPath + 'api/v1/orders',
-            method: 'POST',
+            method: 'GET',
             data: $scope.orderDetails
         }).then(function (response) {
+            console.log(response);
             $scope.loadCart();
             $scope.orderDetails = null
         });
     };
 
     $scope.clearCart = function () {
-        $http.get(contextPath + 'api/v1/cart/clear')
+        $http.get(contextPath + 'api/v1/cart/' + $localStorage.springWebGuestCartId + '/clear')
             .then(function (response) {
+                console.log(response);
                 $scope.loadCart();
             });
     }

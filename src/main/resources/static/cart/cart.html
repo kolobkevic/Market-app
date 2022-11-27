@@ -1,7 +1,7 @@
 <div>
     <p></p>
     <h3>Каталог товаров</h3>
-    <table class="table">
+    <table class="table table-hover">
         <thead>
         <tr>
             <td>Название</td>
@@ -13,9 +13,9 @@
         <tr data-ng-repeat="c in cart.orderItemList">
             <td>{{c.productTitle}}</td>
             <td>{{c.quantity}}</td>
-            <td>{{c.pricePerProduct + 'x' + c.quantity + '=' + c.price}}</td>
+            <td>{{c.price + 'x' + c.quantity + '=' + c.totalPrice}}</td>
             <td>
-                <button class="btn btn-danger" data-ng-click="deleteFromCart(c.id)">Удалить</button>
+                <button class="btn btn-danger" data-ng-click="deleteFromCart(c.productId)">Удалить</button>
             </td>
         </tr>
         </tbody>

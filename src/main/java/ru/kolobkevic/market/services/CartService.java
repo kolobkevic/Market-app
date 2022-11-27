@@ -44,7 +44,7 @@ public class CartService {
     public void addToCart(String cartKey, Long productId) {
         Product product = productService.findById(productId).orElseThrow(
                 () -> new ResourceNotFoundException("Продукт не найден"));
-        execute(cartKey, c -> c.add(productId));
+        execute(cartKey, c -> c.add(product));
     }
 
     public void removeItemFromCart(String cartKey, Long productId) {

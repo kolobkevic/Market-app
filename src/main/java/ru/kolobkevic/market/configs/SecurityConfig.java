@@ -56,8 +56,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/api/v1/products").authenticated()
-                .antMatchers("/api/v1/cart/**").authenticated()
+//                .antMatchers("/api/v1/products").authenticated()
+//                .antMatchers("/api/v1/cart/**").authenticated()
                 .antMatchers("/api/v1/orders/**").authenticated()
                 .antMatchers("/").permitAll()
                 .and()

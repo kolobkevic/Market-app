@@ -1,4 +1,4 @@
-angular.module('market-front').controller('storeController', function ($scope, $http, $location) {
+angular.module('market-front').controller('storeController', function ($scope, $http, $location, $localStorage) {
     const contextPath = 'http://localhost:8189/market/';
     let currentPageIndex = 1;
 
@@ -25,22 +25,25 @@ angular.module('market-front').controller('storeController', function ($scope, $
             method: 'DELETE',
 
         }).then(function successCallback(response) {
+            console.log(response)
             alert('Продукт успешно удален');
             $location.path('/store');
             $scope.loadProducts();
         }, function failureCallback(response) {
+            console.log(response);
             alert('Недостаточно прав для удаления');
         });
     };
 
     $scope.addToCart = function (productId) {
         $http({
-            url: contextPath + 'api/v1/cart/add/' + productId,
+            url: contextPath + 'api/v1/cart/' + $localStorage.springWebGuestCartId + '/add/' + productId,
             method: 'GET',
         }).then(function successCallback(response) {
             alert('Продукт добавлен в корзину');
-            $location.path('/store');
-            $scope.loadProducts();
+            console.log(response);
+            // $location.path('/store');
+            // $scope.loadProducts();
         });
     };
 
