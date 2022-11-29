@@ -3,6 +3,7 @@ package ru.kolobkevic.market.services;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.kolobkevic.market.dtos.ProductDto;
 import ru.kolobkevic.market.entities.Product;
@@ -23,6 +24,11 @@ public class ProductService {
 
     public Page<Product> findAll(int pageIndex, int pageSize) {
         return productRepository.findAll(PageRequest.of(pageIndex, pageSize));
+    }
+
+    public Page<Product> findAllInOnePage() {
+        Pageable wholePage = Pageable.unpaged();
+        return productRepository.findAll(wholePage);
     }
 
     public Product save(Product product) {
