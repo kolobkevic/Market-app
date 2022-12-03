@@ -11,6 +11,7 @@ import java.security.Principal;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/cart")
+@CrossOrigin("http://localhost:3188")
 public class CartController {
     private final CartService cartService;
 

@@ -1,0 +1,4 @@
+server:
+  port: 3188
+  servlet:
+    context-path: /front

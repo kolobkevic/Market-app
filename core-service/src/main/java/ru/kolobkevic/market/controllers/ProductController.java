@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/products")
+@CrossOrigin("http://localhost:3188")
 public class ProductController {
     private final ProductService productService;
     private final ProductConverter productConverter;

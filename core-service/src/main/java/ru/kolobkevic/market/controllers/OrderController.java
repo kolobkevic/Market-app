@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/orders")
+@CrossOrigin("http://localhost:3188")
 public class OrderController {
     private final UserService userService;
     private final OrderService orderService;
