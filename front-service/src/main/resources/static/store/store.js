@@ -1,5 +1,5 @@
 angular.module('market-front').controller('storeController', function ($scope, $http, $location, $localStorage) {
-    const contextPath = 'http://localhost:8189/market/';
+    const contextPath = 'http://localhost:5555/core/';
     let currentPageIndex = 1;
 
     $scope.loadProducts = function (pageIndex = 1) {

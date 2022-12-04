@@ -40,7 +40,7 @@
             try {
                 let jwt = $localStorage.springWebUser.token;
                 let payload = JSON.parse(atob(jwt.split('.')[1]));
-                let currentTime = parseInt(new Date().getSeconds());
+                let currentTime = parseInt(new Date().getTime() / 1000);
                 if (currentTime > payload.exp) {
                     console.log("Token is expired!!!");
                     delete $localStorage.springWebUser;
@@ -54,7 +54,7 @@
             }
         }
         if (!$localStorage.springWebGuestCartId) {
-            $http.get('http://localhost:8189/market/api/v1/cart/generate')
+            $http.get('http://localhost:5555/core/api/v1/cart/generate')
                 .then(function successCallback(response) {
                     console.log(response);
                     $localStorage.springWebGuestCartId = response.data.value;
@@ -64,10 +64,10 @@
 })();
 
 angular.module('market-front').controller('indexController', function ($rootScope, $scope, $http, $location, $localStorage) {
-    const contextPath = 'http://localhost:8189/market';
+    const contextPath = 'http://localhost:5555/core';
 
     $scope.tryToAuth = function () {
-        $http.post(contextPath + '/auth', $scope.user)
+        $http.post('http://localhost:5555/auth/auth', $scope.user)
             .then(function successCallback(response) {
                 if (response.data.token) {
                     $http.defaults.headers.common.Authorization = 'Bearer ' + response.data.token;
@@ -93,7 +93,6 @@ angular.module('market-front').controller('indexController', function ($rootScop
 
     $scope.clearUser = function () {
         delete $localStorage.springWebUser;
-        delete $localStorage.springWebGuestCartId;
         $http.defaults.headers.common.Authorization = '';
     };
 

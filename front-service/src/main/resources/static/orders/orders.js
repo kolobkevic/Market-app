@@ -1,5 +1,5 @@
 angular.module('market-front').controller('ordersController', function ($scope, $http) {
-    const contextPath = 'http://localhost:8189/market/';
+    const contextPath = 'http://localhost:5555/core/';
 
     $scope.loadOrders = function () {
         $http.get(contextPath + 'api/v1/orders')
