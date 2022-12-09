@@ -1,4 +1,4 @@
-package ru.kolobkevic.market.core.dtos;
+package ru.kolobkevic.market.api.dtos;
 
 import lombok.Data;
 

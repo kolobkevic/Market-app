@@ -6,7 +6,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.kolobkevic.market.api.exceptions.ResourceNotFoundException;
-import ru.kolobkevic.market.core.dtos.ProductDto;
+import ru.kolobkevic.market.api.dtos.ProductDto;
 import ru.kolobkevic.market.core.repositories.ProductRepository;
 import ru.kolobkevic.market.core.entities.Product;
 

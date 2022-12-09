@@ -4,8 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.kolobkevic.market.core.converters.OrderConverter;
-import ru.kolobkevic.market.core.dtos.OrderDetailsDto;
-import ru.kolobkevic.market.core.dtos.OrderDto;
+import ru.kolobkevic.market.api.dtos.OrderDetailsDto;
+import ru.kolobkevic.market.api.dtos.OrderDto;
 import ru.kolobkevic.market.core.services.OrderService;
 
 import java.util.List;

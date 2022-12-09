@@ -1,10 +1,11 @@
-package ru.kolobkevic.market.core.controllers;
+package ru.kolobkevic.market.cart.controllers;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import ru.kolobkevic.market.api.dtos.CartDto;
 import ru.kolobkevic.market.api.dtos.StringResponse;
-import ru.kolobkevic.market.core.dtos.Cart;
-import ru.kolobkevic.market.core.services.CartService;
+import ru.kolobkevic.market.cart.converters.CartConverter;
+import ru.kolobkevic.market.cart.services.CartService;
 
 
 @RequiredArgsConstructor
@@ -12,10 +13,11 @@ import ru.kolobkevic.market.core.services.CartService;
 @RequestMapping("/api/v1/cart")
 public class CartController {
     private final CartService cartService;
+    private final CartConverter cartConverter;
 
     @GetMapping("/{uuid}")
-    public Cart getCart(@RequestHeader(required = false) String username, @PathVariable String uuid) {
-        return cartService.getCurrentCart(getCurrentCartUuid(username, uuid));
+    public CartDto getCart(@RequestHeader(required = false) String username, @PathVariable String uuid) {
+        return cartConverter.modelToDto(cartService.getCurrentCart(getCurrentCartUuid(username, uuid)));
     }
 
     @GetMapping("/{uuid}/add/{productId}")

@@ -1,12 +1,13 @@
-package ru.kolobkevic.market.core.services;
+package ru.kolobkevic.market.cart.services;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
-import ru.kolobkevic.market.core.dtos.Cart;
-import ru.kolobkevic.market.core.entities.Product;
+import ru.kolobkevic.market.api.dtos.ProductDto;
 import ru.kolobkevic.market.api.exceptions.ResourceNotFoundException;
+import ru.kolobkevic.market.cart.model.Cart;
+import ru.kolobkevic.market.cart.integration.ProductServiceIntegration;
 
 import java.util.UUID;
 import java.util.function.Consumer;
@@ -14,9 +15,9 @@ import java.util.function.Consumer;
 @Service
 @RequiredArgsConstructor
 public class CartService {
-    private final ProductService productService;
     private final RedisTemplate<String, Object> redisTemplate;
 
+    private final ProductServiceIntegration productServiceIntegration;
     @Value("${utils.cart.prefix}")
     public String cartPrefix;
 
@@ -42,7 +43,7 @@ public class CartService {
     }
 
     public void addToCart(String cartKey, Long productId) {
-        Product product = productService.findById(productId).orElseThrow(
+        ProductDto product = productServiceIntegration.getProductById(productId).orElseThrow(
                 () -> new ResourceNotFoundException("Продукт не найден"));
         execute(cartKey, c -> c.add(product));
     }
