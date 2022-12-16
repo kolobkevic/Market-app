@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.kolobkevic.market.api.dtos.ProductDto;
 
+import java.math.BigDecimal;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -12,8 +14,8 @@ public class CartItem {
     private Long productId;
     private String productTitle;
     private int quantity;
-    private Double price;
-    private Double totalPrice;
+    private BigDecimal price;
+    private BigDecimal totalPrice;
 
     public CartItem(ProductDto productDto) {
         this.productId = productDto.getId();
@@ -25,6 +27,6 @@ public class CartItem {
 
     public void changeQuantity(int delta) {
         this.quantity += delta;
-        this.totalPrice = this.quantity * this.price;
+        this.totalPrice = this.price.multiply(BigDecimal.valueOf(this.quantity));
     }
 }

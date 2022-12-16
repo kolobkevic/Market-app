@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -11,8 +13,8 @@ public class OrderItemDto {
     private Long productId;
     private String productTitle;
     private int quantity;
-    private Double price;
-    private Double totalPrice;
+    private BigDecimal price;
+    private BigDecimal totalPrice;
 
     public OrderItemDto(ProductDto product) {
         this.productId = product.getId();
@@ -24,6 +26,6 @@ public class OrderItemDto {
 
     public void changeQuantity(int delta){
         this.quantity += delta;
-        this.totalPrice = this.quantity * this.price;
+        this.totalPrice = this.price.multiply(BigDecimal.valueOf(this.quantity));
     }
 }

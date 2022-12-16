@@ -13,6 +13,7 @@ import ru.kolobkevic.market.core.exceptions.DataValidationException;
 import ru.kolobkevic.market.core.entities.Product;
 import ru.kolobkevic.market.core.services.ProductService;
 
+import java.math.BigDecimal;
 import java.util.stream.Collectors;
 
 
@@ -25,8 +26,8 @@ public class ProductController {
 
     @GetMapping
     public Page<ProductDto> findAll(@RequestParam(defaultValue = "1", name = "p") int pageIndex,
-                                    @RequestParam(required = false, name = "minPrice") Double minPrice,
-                                    @RequestParam(required = false, name = "maxPrice") Double maxPrice) {
+                                    @RequestParam(required = false, name = "minPrice") BigDecimal minPrice,
+                                    @RequestParam(required = false, name = "maxPrice") BigDecimal maxPrice) {
         int pageSize = 10;
         if (pageIndex < 1) {
             pageIndex = 1;

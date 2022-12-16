@@ -13,10 +13,17 @@
         <tr data-ng-repeat="c in cart.cartItemList">
             <td>{{c.productTitle}}</td>
             <td>{{c.quantity}}</td>
-            <td>{{c.price + 'x' + c.quantity + '=' + c.totalPrice}}</td>
+            <td>{{c.price}}</td>
+            <td>{{c.totalPrice}}</td>
             <td>
                 <button class="btn btn-danger" data-ng-click="deleteFromCart(c.productId)">Удалить</button>
             </td>
+        </tr>
+        <tr data-ng-model="cart">
+            <td></td>
+            <td></td>
+            <td>Итого:</td>
+            <td>{{cart.totalPrice}}</td>
         </tr>
         </tbody>
     </table>

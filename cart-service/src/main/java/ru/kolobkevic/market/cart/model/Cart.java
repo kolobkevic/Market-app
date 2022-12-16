@@ -3,6 +3,7 @@ package ru.kolobkevic.market.cart.model;
 import lombok.Data;
 import ru.kolobkevic.market.api.dtos.ProductDto;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.List;
 @Data
 public class Cart {
     private List<CartItem> cartItemList;
-    private Double totalPrice;
+    private BigDecimal totalPrice;
 
     public Cart() {
         this.cartItemList = new ArrayList<>();
@@ -56,13 +57,15 @@ public class Cart {
     }
 
     private void recalculate() {
-        totalPrice = 0d;
-        totalPrice = cartItemList.stream().mapToDouble(CartItem::getPrice).sum();
+        totalPrice = BigDecimal.valueOf(0);
+        for (CartItem o : cartItemList) {
+            totalPrice = totalPrice.add(o.getTotalPrice());
+        }
     }
 
     public void clear() {
         cartItemList.clear();
-        totalPrice = 0d;
+        totalPrice = BigDecimal.valueOf(0);
     }
 
     public void merge(Cart secondCart){
