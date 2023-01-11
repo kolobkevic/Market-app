@@ -1,4 +1,4 @@
-package ru.kolobkevic.market.core.configs;
+package ru.kolobkevic.market.cart.configs;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

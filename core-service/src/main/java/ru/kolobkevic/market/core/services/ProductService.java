@@ -6,11 +6,12 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.kolobkevic.market.api.exceptions.ResourceNotFoundException;
-import ru.kolobkevic.market.core.dtos.ProductDto;
+import ru.kolobkevic.market.api.dtos.ProductDto;
 import ru.kolobkevic.market.core.repositories.ProductRepository;
 import ru.kolobkevic.market.core.entities.Product;
 
 import javax.transaction.Transactional;
+import java.math.BigDecimal;
 import java.util.Optional;
 
 @Service
@@ -48,15 +49,15 @@ public class ProductService {
         return product;
     }
 
-    public Page<Product> findAllByPriceGreaterThanEqual(int pageIndex, int pageSize, Double minPrice){
+    public Page<Product> findAllByPriceGreaterThanEqual(int pageIndex, int pageSize, BigDecimal minPrice){
         return productRepository.findAllByPriceGreaterThanEqual(PageRequest.of(pageIndex, pageSize), minPrice);
     }
 
-    public Page<Product> findAllByPriceLessThanEqual(int pageIndex, int pageSize, Double maxPrice){
+    public Page<Product> findAllByPriceLessThanEqual(int pageIndex, int pageSize, BigDecimal maxPrice){
         return productRepository.findAllByPriceLessThanEqual(PageRequest.of(pageIndex, pageSize), maxPrice);
     }
 
-    public Page<Product> findAllByPriceIsBetween(int pageIndex, int pageSize, Double minPrice, Double maxPrice){
+    public Page<Product> findAllByPriceIsBetween(int pageIndex, int pageSize, BigDecimal minPrice, BigDecimal maxPrice){
         return productRepository.findAllByPriceIsBetween(PageRequest.of(pageIndex, pageSize), minPrice, maxPrice);
     }
 }

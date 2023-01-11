@@ -1,7 +1,7 @@
 package ru.kolobkevic.market.core.converters;
 
 import org.springframework.stereotype.Component;
-import ru.kolobkevic.market.core.dtos.ProductDto;
+import ru.kolobkevic.market.api.dtos.ProductDto;
 import ru.kolobkevic.market.core.entities.Product;
 
 @Component

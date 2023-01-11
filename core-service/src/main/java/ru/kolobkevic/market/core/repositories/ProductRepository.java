@@ -6,11 +6,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import ru.kolobkevic.market.core.entities.Product;
 
+import java.math.BigDecimal;
+
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
-    Page<Product> findAllByPriceLessThanEqual(Pageable pageable, Double maxPrice);
+    Page<Product> findAllByPriceLessThanEqual(Pageable pageable, BigDecimal maxPrice);
 
-    Page<Product> findAllByPriceGreaterThanEqual(Pageable pageable, Double minPrice);
+    Page<Product> findAllByPriceGreaterThanEqual(Pageable pageable, BigDecimal minPrice);
 
-    Page<Product> findAllByPriceIsBetween(Pageable pageable, Double minPrice, Double maxPrice);
+    Page<Product> findAllByPriceIsBetween(Pageable pageable, BigDecimal minPrice, BigDecimal maxPrice);
 }

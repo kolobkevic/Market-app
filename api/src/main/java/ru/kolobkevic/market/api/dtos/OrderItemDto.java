@@ -1,9 +1,10 @@
-package ru.kolobkevic.market.core.dtos;
+package ru.kolobkevic.market.api.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ru.kolobkevic.market.core.entities.Product;
+
+import java.math.BigDecimal;
 
 @Data
 @NoArgsConstructor
@@ -12,10 +13,10 @@ public class OrderItemDto {
     private Long productId;
     private String productTitle;
     private int quantity;
-    private Double price;
-    private Double totalPrice;
+    private BigDecimal price;
+    private BigDecimal totalPrice;
 
-    public OrderItemDto(Product product) {
+    public OrderItemDto(ProductDto product) {
         this.productId = product.getId();
         this.productTitle = product.getTitle();
         this.quantity = 1;
@@ -25,6 +26,6 @@ public class OrderItemDto {
 
     public void changeQuantity(int delta){
         this.quantity += delta;
-        this.totalPrice = this.quantity * this.price;
+        this.totalPrice = this.price.multiply(BigDecimal.valueOf(this.quantity));
     }
 }
