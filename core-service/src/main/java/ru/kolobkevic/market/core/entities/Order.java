@@ -13,7 +13,6 @@ import java.util.List;
 @Entity
 @Table(name = "orders")
 @Data
-@NoArgsConstructor
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,5 +41,50 @@ public class Order {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    public Order() {
+    }
+
+    public static Builder createBuilder(){
+        return new Builder();
+    }
+
+    public static class Builder{
+        private final Order order;
+
+        public Builder(){
+            this.order = new Order();
+        }
+
+        public Builder withUsername(String username){
+            this.order.username = username;
+            return this;
+        }
+
+        public Builder withTotalPrice(BigDecimal totalPrice){
+            this.order.totalPrice = totalPrice;
+            return this;
+        }
+
+        public Builder withAddress(String address){
+            this.order.address = address;
+            return this;
+        }
+
+        public Builder withPhoneNumber(String phoneNumber){
+            this.order.phoneNumber = phoneNumber;
+            return this;
+        }
+
+        public Builder withItems (List<OrderItem> items){
+            this.order.items.clear();
+            this.order.items.addAll(items);
+            return this;
+        }
+
+        public Order build(){
+            return order;
+        }
+    }
 
 }
