@@ -24,11 +24,14 @@ public class OrderService {
     @Transactional
     public void createOrder(String username, OrderDetailsDto orderDetailsDto){
         CartDto currentCart = cartServiceIntegration.getUserCart(username);
-        Order order = new Order();
-        order.setAddress(orderDetailsDto.getAddress());
-        order.setUsername(username);
-        order.setTotalPrice(currentCart.getTotalPrice());
-        order.setPhoneNumber(orderDetailsDto.getPhone());
+
+        Order order = Order.createBuilder()
+                .withAddress(orderDetailsDto.getAddress())
+                .withPhoneNumber(orderDetailsDto.getPhone())
+                .withTotalPrice(currentCart.getTotalPrice())
+                .withUsername(username)
+                .build();
+
         List<OrderItem> items = currentCart.getCartItemList().stream()
                 .map(o -> {
                     OrderItem item = new OrderItem();
@@ -49,4 +52,6 @@ public class OrderService {
     public List<Order> findOrdersByUsername(String username){
         return orderRepository.findAllByUsername(username);
     }
+
+
 }
